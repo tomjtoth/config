@@ -34,7 +34,7 @@ boot via the boot menu just in case UEFI is higher prioritized than legacy
 
 # prepare partitions
  - order matters:\
-   read/write speeds in mechanical HDDs vary based on where the partition is located, the outer parts (beginning) of the disk is/are [faster](https://en.wikipedia.org/wiki/Circular motion#Velocity) therefore always install windows on the beginning of the disk (I tested 3 HDDs and they showed similar read/write speeds in the beginning/end of the disk)\
+   read/write speeds in mechanical HDDs vary based on where the partition is located, the outer parts (beginning) of the disk is/are [faster](<https://en.wikipedia.org/wiki/Circular motion#Velocity>) therefore always install windows on the beginning of the disk (I tested 3 HDDs and they showed similar read/write speeds in the beginning/end of the disk)\
  - use fdisk to
    - create a new DOS partition table on the disk
    - create 1st primary partition of 500MiB (for Windows bootloader)
