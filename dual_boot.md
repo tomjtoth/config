@@ -12,7 +12,7 @@ go through all tabs in the BIOS and look for:
  - **secure boot** (disable it)
  - **legacy boot** (enable it - this means you'll be able to boot in BIOS/MBR mode)
  - boot menu (enable its hotkey)
- - boot order (set the primary disk of the machine as 1st)\
+ - boot order (set the primary disk of the machine as 1st)
 there's a small chance the machine is so old you won't find neither of the first 2 entries
 
 # prepare the installation media
@@ -34,7 +34,7 @@ boot via the boot menu just in case UEFI is higher prioritized than legacy
 
 # prepare partitions
  - order matters:\
-   read/write speeds in mechanical HDDs vary based on where the partition is located, the outer parts (beginning) of the disk is/are [faster](<https://en.wikipedia.org/wiki/Circular motion#Velocity>) therefore always install windows on the beginning of the disk (I tested 3 HDDs and they showed similar read/write speeds in the beginning/end of the disk)\
+   read/write speeds in mechanical HDDs vary based on where the partition is located, the outer parts (beginning) of the disk is/are [faster](<https://en.wikipedia.org/wiki/Circular motion#Velocity>) therefore always install windows on the beginning of the disk (I tested 3 HDDs and they showed similar read/write speeds in the beginning/end of the disk)
  - use fdisk to
    - create a new DOS partition table on the disk
    - create 1st primary partition of 500MiB (for Windows bootloader)
@@ -67,7 +67,7 @@ boot via the boot menu just in case UEFI is higher prioritized than legacy
    
 ## FOSS recommendations
  - I remember trying these Desktop Environemts:
-   - LXDE - works well on weaker hardware (required manual scripting of volume/brightness control at the time)
+   - LXDE - works well on weaker hardware (requires manual scripting of volume/brightness control at the time)
    - XFCE4 (usually works out of the box, on some laptops brightness control acted funny..)
    - gnome-shell on wayland - seemed quite bloated even without the real gnome package
    - sway (on wayland) started using this one most recently, takes a while to get used to tiling
