@@ -35,37 +35,63 @@ boot via the boot menu just in case UEFI is higher prioritized than legacy
 # prepare partitions
  - order matters:\
    read/write speeds in mechanical HDDs vary based on where the partition is located, the outer parts (beginning) of the disk is/are [faster](https://en.wikipedia.org/wiki/Circular motion#Velocity) therefore always install windows on the beginning of the disk (I tested 3 HDDs and they showed similar read/write speeds in the beginning/end of the disk)\
- - use fdisk to create a new DOS partition table on the disk
+ - use fdisk to
+   - create a new DOS partition table on the disk
+   - create 1st primary partition of 500MiB (for Windows bootloader)
+   - create 2nd primary partition of ~80GiB (for Windows C:\)
+   - create 3rd primary partition of ~30GiB (for linux /)
+   - create 4th primary partition (not extended) for the rest of your data
+   - change filesystem types to NTFS for partitions 1-2,4
+   - write your changes
+ - format partitions 
+   - `mkfs.ntfs -Q /dev/sdX{1,2,4}`
+   - `mkfs.ext4 /dev/sdX3`
+ - reboot and start installing windows
 
 # install windows
  - do **NOT allow internet access** during installation
  - select custom installation mode
- - delete the previously created 2 partitions
- - highlight the newly appeared unallocated area and click next/proceed (we're letting Windows create it as it sees fit)
- - do not enter a password for the primary user at this time
- - run cmd as admin and disable hibernation "powercfg /h off"
- - go to advanced performance settings and shrink the swap/pagefile
+ - delete the previously created partitions 1-2
+ - **select/click/highlight the newly appeared unallocated area** and click next/proceed (we're letting Windows create partitions 1-2 as it sees fit)
+ - when it looks like the install's ready
+   - do not enter a password for the primary user
+   - run cmd as admin and disable hibernation "powercfg /h off"
+   - go to advanced performance settings and shrink the swap/pagefile
 
 # install linux
- - always read the [ArchWiki](https://wiki.archlinux.org/title/installation_guide)\
- - while you're in `arch-chroot /mnt`:
-   - `pacstrap /mnt at least networkmanager but better if all the possible packages you'll most probably use from the first boot on`
-   - also `systemctl enable {NetworkManager,ntpd,other_services_separated_by_comma}` services, coz why not
+ - always read the [ArchWiki](https://wiki.archlinux.org/title/installation_guide)
+ - `pacstrap /mnt at least networkmanager intel-ucode or amd-ucode but better if all the possible packages you'll most probably use from the first boot on`
+ - while you're chroot-ed
+   - `systemctl enable {NetworkManager,ntpd,other_services_separated_by_comma}`
    - also **create the primary user and add it to wheel/sudoers**
+   
 ## FOSS recommendations
  - I remember trying these Desktop Environemts:
    - LXDE - works well on weaker hardware (required manual scripting of volume/brightness control at the time)
    - XFCE4 (usually works out of the box, on some laptops brightness control acted funny..)
    - gnome-shell on wayland - seemed quite bloated even without the real gnome package
    - sway (on wayland) started using this one most recently, takes a while to get used to tiling
+ - emulators:
+   - vice
+   - dosbox
+   - wine
+   - virtualbox / qemu if you want to get your hands dirty
+ - utilities:
+   - ncdu
+   - mc
+   - htop
+   - nano
+   - wondershaper
+ 
 
 # optionally create a recovery image of windows
- - install clonezilla in linux
+ - boot into linux
+ - `pacman -S clonezilla`
  - `sudo mkdir /home/partimag`
- - capture all Windows related partitions (*/dev/sda{1,2}*)
- - (test the image)
-   - format all Win10 partitions
-   - restore the images to the partitions
+ - capture all Windows related partitions *(/dev/sda{1,2})*
+ - *(test the image)*
+   - *format all Win10 partitions*
+   - *restore the images to the partitions*
 
 # finish up Windows
  - connect to the internet
