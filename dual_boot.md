@@ -5,18 +5,14 @@ this guide is really vague due to the ever changing world of IT, I'm too lazy to
  - windows
    - **use a non-windows platform** to download the iso straight from [M$](https://www.microsoft.com/software-download)
  - linux
-   - I use Arch Linux since I like to see how things work under the hood, but look around on [DS](https://distrowatch.com/)
+   - I use [Arch Linux](https://archlinux.org/download/) since I like to see how things work under the hood, but look around on [DS](https://distrowatch.com/) to check out other distros
 
 # BIOS settings
 go through all tabs in the BIOS and look for:
- - **secure boot**\
-   disable it
- - **legacy boot**\
-   enable it (this means you'll be able to boot in BIOS/MBR mode)
- - boot menu\
-   enable its hotkey
- - boot order\
-   set the primary disk of the machine as 1st
+ - **secure boot** (disable it)
+ - **legacy boot** (enable it - this means you'll be able to boot in BIOS/MBR mode)
+ - boot menu (enable its hotkey)
+ - boot order (set the primary disk of the machine as 1st)\
 there's a small chance the machine is so old you won't find neither of the first 2 entries
 
 # prepare the installation media
@@ -34,35 +30,34 @@ there's a small chance the machine is so old you won't find neither of the first
      use rufus
 
 # boot the target machine
- - boot via the boot menu just in case UEFI is higher prioritized than legacy
+boot via the boot menu just in case UEFI is higher prioritized than legacy
 
 # prepare partitions
-order matters:\
-read/write speeds in mechanical HDDs vary based on where the partition is located, the outer parts (beginning) of the disk is/are [faster](https://en.wikipedia.org/wiki/Circular motion#Velocity) therefore always install windows on the beginning of the disk (I tested 3 HDDs and they showed similar read/write speeds in the beginning/end of the disk)\
-use fdisk to create a new DOS partition table on the disk
+ - order matters:\
+   read/write speeds in mechanical HDDs vary based on where the partition is located, the outer parts (beginning) of the disk is/are [faster](https://en.wikipedia.org/wiki/Circular motion#Velocity) therefore always install windows on the beginning of the disk (I tested 3 HDDs and they showed similar read/write speeds in the beginning/end of the disk)\
+ - use fdisk to create a new DOS partition table on the disk
 
 # install windows
-do **NOT allow internet** access during installation\
-select custom installation mode\
-delete the previously created 2 partitions\
-highlight the newly appeared unallocated area and click next/proceed (we're letting Windows create it as it sees fit)\
-do not enter a password for the primary user at this time\
-run cmd as admin and disable hibernation "powercfg /h off"\
-go to advanced performance settings and shrink the swap/pagefile
+ - do **NOT allow internet access** during installation
+ - select custom installation mode
+ - delete the previously created 2 partitions
+ - highlight the newly appeared unallocated area and click next/proceed (we're letting Windows create it as it sees fit)
+ - do not enter a password for the primary user at this time
+ - run cmd as admin and disable hibernation "powercfg /h off"
+ - go to advanced performance settings and shrink the swap/pagefile
 
 # install linux
-always read the [ArchWiki](https://wiki.archlinux.org/title/installation_guide)\
-while you're in `arch-chroot /mnt`:
- - `pacstrap /mnt at least networkmanager but better if all the possible packages you'll most probably use from the first boot on`
- - also `systemctl enable {NetworkManager,ntpd,etc services}` services, coz why not
- - also **create the primary user and add it to wheel/sudoers**
-
-## my configuration
-it changes quite often, I remember trying these Desktop Environemts:
- - LXDE - works well on weak hardware (required manual scripting of volume/brightness control at the time)
- - XFCE4 (usually works out of the box, on some laptops brightness control acted funny..)
- - gnome-shell on wayland - seemed quite bloated even without the real gnome package
- - sway (on wayland) most recently
+ - always read the [ArchWiki](https://wiki.archlinux.org/title/installation_guide)\
+ - while you're in `arch-chroot /mnt`:
+   - `pacstrap /mnt at least networkmanager but better if all the possible packages you'll most probably use from the first boot on`
+   - also `systemctl enable {NetworkManager,ntpd,other_services_separated_by_comma}` services, coz why not
+   - also **create the primary user and add it to wheel/sudoers**
+## FOSS recommendations
+ - I remember trying these Desktop Environemts:
+   - LXDE - works well on weaker hardware (required manual scripting of volume/brightness control at the time)
+   - XFCE4 (usually works out of the box, on some laptops brightness control acted funny..)
+   - gnome-shell on wayland - seemed quite bloated even without the real gnome package
+   - sway (on wayland) started using this one most recently, takes a while to get used to tiling
 
 # optionally create a recovery image of windows
  - install clonezilla in linux
@@ -72,5 +67,7 @@ it changes quite often, I remember trying these Desktop Environemts:
    - format all Win10 partitions
    - restore the images to the partitions
 
-# connect Windows to the internet
-let it get the "best" drivers
+# finish up Windows
+ - connect to the internet
+ - "check for updates"
+ - leave it on for a few hours
