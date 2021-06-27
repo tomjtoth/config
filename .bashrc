@@ -27,4 +27,4 @@ esac
 
 . ~/.bash_aliases
 
-echo boohoo
+[ -f ~/.user_pass ] && cat ~/.user_pass
