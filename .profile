@@ -10,12 +10,12 @@ if [ $HOSTNAME != "15-ab125no" ]; then
 fi
 OFF
 
-if [ -f ~/.sync_github_configs ]; then
-	if [ -d "$HOME/.config/..home/.git" ]; then
+if [ -d ~/.config/.tomjtoth ]; then
+	if [ -d "$HOME/.config/.tomjtoth/.git" ]; then
 		cd ~/.config/..home
 		git pull
 	else
-		git clone https://github.com/tomjtoth/config ~/.config/..home
+		git clone https://github.com/tomjtoth/config ~/.config/.tomjtoth
 	fi
 fi
 
