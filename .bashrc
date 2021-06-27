@@ -38,9 +38,8 @@ if [ -d $GITHUB ]; then
 	if [ -d $GITHUB/.git ]; then
 		if [ ! -f $GITHUB/$LAST ] \
 		|| [ $(<$GITHUB/$LAST) -lt $(($(date +%s)-60*60*24)) ]; then
-			cd $GITHUB
-			git stash
-			git pull
+			git -c $GITHUB stash
+			git -c $GITHUB pull
 			date +%s > $GITHUB/$LAST
 		fi
 	else
