@@ -26,3 +26,5 @@ esac
 [[ "$PATH" != */.local/bin* ]] && PATH="$HOME/.local/bin:$PATH"
 
 . ~/.bash_aliases
+
+echo boohoo
