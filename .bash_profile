@@ -3,7 +3,6 @@
 #
 
 . ~/.bashrc
-. ~/.profile
 
 #Android related config
 if $(uname -a | grep -Pq 'Android'); then
