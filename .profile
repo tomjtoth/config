@@ -13,6 +13,7 @@ OFF
 if [ -d ~/.config/.tomjtoth ]; then
 	if [ -d "$HOME/.config/.tomjtoth/.git" ]; then
 		cd ~/.config/.tomjtoth
+		git stash
 		git pull
 	else
 		git clone https://github.com/tomjtoth/config ~/.config/.tomjtoth
