@@ -9,3 +9,13 @@ if [ $HOSTNAME != "15-ab125no" ]; then
 	synclient TouchpadOff=0
 fi
 OFF
+
+if [ -f ~/.sync_github_configs ]; then
+	if [ -d "$HOME/.config/..home/.git" ]; then
+		cd ~/.config/..home
+		git pull
+	else
+		git clone https://github.com/tomjtoth/config ~/.config/..home
+	fi
+fi
+

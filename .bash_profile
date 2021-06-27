@@ -3,6 +3,7 @@
 #
 
 . ~/.bashrc
+. ~/.profile
 
 #Android related config
 if $(uname -a | grep -Pq 'Android'); then
@@ -31,13 +32,7 @@ case $HOSTNAME in
 	;;
 	
 	*)
-	export TERM=xterm-256color
-	if [ -d "$HOME/.config/..home/.git" ]; then
-		cd ~/.config/..home
-		git pull
-	else
-		git clone https://github.com/tomjtoth/config ~/.config/..home
-	fi
+		export TERM=xterm-256color
 	;;
 esac
 
