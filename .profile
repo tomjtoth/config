@@ -12,7 +12,7 @@ OFF
 
 if [ -d ~/.config/.tomjtoth ]; then
 	if [ -d "$HOME/.config/.tomjtoth/.git" ]; then
-		cd ~/.config/..home
+		cd ~/.config/.tomjtoth
 		git pull
 	else
 		git clone https://github.com/tomjtoth/config ~/.config/.tomjtoth
