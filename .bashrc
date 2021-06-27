@@ -27,3 +27,6 @@ esac
 . ~/.bash_aliases
 
 [ -f ~/.user_pass ] && cat ~/.user_pass
+
+
+echo alma
