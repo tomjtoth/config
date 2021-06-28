@@ -1,1 +1,5 @@
-faf
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+  include "hu"
+  key <LSGT> { [ Control_R, ISO_Level3_Shift ] };
+};
