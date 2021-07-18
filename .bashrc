@@ -26,24 +26,19 @@ esac
 
 . ~/.bash_aliases
 
-# echoing dummy pw
-
 [ -f ~/.user_pass ] && cat ~/.user_pass
-
-# syncing via bashrc once a day
 
 GITHUB=~/.config/.tomjtoth
 if [ -d $GITHUB ]; then
 	LAST=.last_github_sync
-	if [ -d $GITHUB/.git ]; then
-		if [ ! -f $GITHUB/$LAST ] \
-		|| [ $(<$GITHUB/$LAST) -lt $(($(date +%s)-60*60*24)) ]; then
-			git -C $GITHUB stash
-			git -C $GITHUB pull
-			date +%s > $GITHUB/$LAST
-		fi
-	else
-		git clone https://github.com/tomjtoth/config $GITHUB
+	if [ ! -f $GITHUB/$LAST ] \
+	|| [ $(<$GITHUB/$LAST) -lt $(($(date +%s)-60*60*24)) ]; then
+		echo -e "\n\tupdating config files\n"
+		git -C $GITHUB stash
+		git -C $GITHUB pull
+		echo
+		date +%s > $GITHUB/$LAST
+		. ~/.bash_aliases
 	fi
 fi
 

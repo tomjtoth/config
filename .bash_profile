@@ -55,5 +55,6 @@ if [ -z $DISPLAY ] \
 && [ -f ~/.config/sway/config ]
 then
 	export PATH
+	export _JAVA_AWT_WM_NONREPARENTING=1
 	sway > ~/.sway.log
 fi
