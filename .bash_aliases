@@ -5,15 +5,21 @@ TORSER=rk3328
 
 alias sss="sudo systemctl"
 alias {é,ö}h='h() {
-local IP pSSH rSSH lSSH user
+[ "$(systemctl is-active sshd)" != "active" ] && \
+	echo -e "\nsshd is not running, starting it now\n" && \
+	sss start sshd
+
 [ $# -lt 2 ] && echo "
 invocation:
 öh IP pSSH [ rSSH=rSSH ] [ lSSH=lSSH ] [ user=username ]
 " && return
+
 echo "
 reverse SSH tunnel created
 press CTRL+C to destroy it
 "
+
+local IP pSSH rSSH lSSH user
 IP=$1
 pSSH=$2
 shift
@@ -24,12 +30,18 @@ done
 
 ssh -R ${rSSH:-60000}:localhost:${lSSH:-44422} -N -p ${pSSH} ${user:-guest}@${IP}
 
-unset -f h
 }
 h'
 
+alias {é,ö}hs='hs() {
+ssh root@localhost -p ${1:-60000} -i ~/.ssh/id_ed25519_remotehelp
+unset -f hs
+}
+hs'
+
+
 if [ -f /usr/bin/pacman ]; then
-	AUR="pacaur"
+	[ -f /usr/bin/pacaur ] && AUR="pacaur" || AUR="pacman"
 	INSTALL='f() {
 		[ $(( ($(date +%s) - \
 			$(stat -c %Y /var/lib/pacman/sync/*.db \
@@ -61,7 +73,7 @@ elif [ -f /usr/bin/apt ]; then
 	UPDATER="$UPDATE && systemctl -i reboot"
 	THROTTLEU="sudo wondershaper eth0 -u"
 	THROTTLED="sudo wondershaper eth0 -d"
-THROTTLEC="sudo wondershaper clear eth0"
+	THROTTLEC="sudo wondershaper clear eth0"
 elif [ -f /data/data/com.termux/files/usr/bin/pkg ]; then
 	INSTALL="pkg install"
 	REMOVE="pkg uninstall"
@@ -86,15 +98,18 @@ alias {é,ö}s="sudo -E -s"
 alias {é,ö}tu="$THROTTLEU"
 alias {é,ö}td="$THROTTLED"
 alias {é,ö}tc="$THROTTLEC"
-alias tt="echo -e \"\ncurrently active transfers:\n\"; ps axu | grep -Po 'sender.+(torrents|\/data\/download)\/\K.+(?=\")'; echo"
+alias tt='echo -e "
+currently active transfers:
+"
+ps axu | grep -Po "sender.+(torrents|\/data\/download)\/\K.+(?=\")"
+echo'
 alias tl="minden.sh tl $TORSER"
 alias tg="minden.sh tg $TORSER"
 alias td="minden.sh td $TORSER"
 
 # etc
 
-alias zzz='
-z() {
+alias zzz='z() {
 	[ -n "$1" ] && \
 		echo "going to suspend in $1" && \
 		sleep $1
